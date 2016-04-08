@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /> 
+<title>注册</title>
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<style type="text/css">
+	form {
+		position: absolute;
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    margin-left: -150px;
+    margin-top: -150px;
+	}
+</style>
+</head>
+<body>
+<form action="/register" role="form" method="post">
+  <div class="form-group">
+    <label for="email">注册邮箱：</label>
+    <input type="email" name="email" class="form-control" id="email" placeholder="请输入注册邮箱">
+  </div>
+  <div class="form-group">
+    <label for="nickname">名字：</label>
+    <input type="text" name="nickname" class="form-control" id="nickname" placeholder="请输入名字">
+  </div>
+  <div class="form-group">
+    <label for="password">密码：</label>
+    <input type="password" name="password" class="form-control" id="password" placeholder="请输入密码">
+  </div>
+  <div class="form-group">
+    <label for="re-password">密码：</label>
+    <input type="password" class="form-control" id="re-password" placeholder="请再次输入密码">
+  </div>
+  <button id='login' type="submit" class="btn btn-primary">注册</button>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+</form>
+
+<% if (locals.success) { %> 
+    <div id="alt_sucess" class="alert alert-success"> 
+      <%- success %> 
+    </div> 
+<% } %> 
+
+<% if (locals.error) { %> 
+  <div id="alt_warning" class="alert alert-warning"> 
+    <%= error %> 
+  </div> 
+<% } %> 
+
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript">
+	$('#login').click(function(event) {
+		var email = $('#email').val(),
+        nickname = $('#nickname').val(),
+				password = $('#password').val(),
+        rePassword = $('#re-password').val();
+		if(email.length===0 ){
+			$('#email').focus();
+			return false;
+		}
+    if(nickname.length===0 ){
+      $('#nickname').focus();
+      return false;
+    }
+    if(password.length===0 ){
+      $('#password').focus();
+      return false;
+    }
+		if(rePassword!=password ){
+      $('.alert').remove();
+      $('body').append('<div id="alt_warning" class="alert alert-warning">密码不一致，请确认密码</div>')
+			$('#password').focus();
+			return false;
+		}
+
+		return true;
+	});
+</script>
+
+</body>
+</html>

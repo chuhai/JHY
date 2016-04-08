@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<title>骏泓源-新增产品</title>
+<style type="text/css">
+	body {
+		padding: 20px 20%;
+	}
+	.pic-container {
+		margin-bottom: 10px;
+	}
+	.pic-container li {
+		position: relative;
+		display: inline-block;
+		width: 80px;
+		height: 80px;
+		margin-right: 20px;
+		outline: 2px solid #3a5898;
+		vertical-align: top;
+	}
+	.pic-container li img {
+		width: 100%;
+		height: 100%;
+	}
+	.pic-container li .delete {
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 16px;
+		line-height: 16px;
+		color: #fff;
+		text-align: center;
+		background-color: red;
+		cursor: pointer;
+	}
+	#plus-li {
+		position: relative;
+		font-size: 40px;
+		text-align: center;
+		line-height: 80px;
+	}
+	#upload-form {
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: 9;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+	}
+	#upload-form input {
+		width: 100%;
+		height: 100%;
+		cursor: pointer;
+	}
+
+</style>
+</head>
+<body>
+
+	<div role="form">
+	  <div class="form-group">
+	    <label for="name">产品名：</label>
+	    <input type="text" name="name" class="form-control" id="name" placeholder="产品名">
+	  </div>
+	  <div class="form-group">
+	    <label for="name">产品分类：</label>
+	    <select id="classify" class="form-control">
+	    	<option value="0">电源适配器</option>
+	    	<option value="1">USB充电器</option>
+	    	<option value="2">锂电池充电器</option>
+	    </select>
+	  </div>
+	  <div class="form-group">
+	    <label for="name">产品展示图片：</label>
+			<div id="img-container" class="pic-container">
+				<%if(locals.operate==1) { for(var i=0; i<product.imgs.length; i++){ %>
+					<li><img src="<%= product.imgs[i] %>"><span class="delete">x</span></li>
+				<% }} %>
+				<li id="plus-li">
+					+
+					<form id="upload-form" role="form" method="POST" action="/upload/product" enctype='multipart/form-data'><input type="file" name="product_img" id="upload-input" placeholder="选择图片" accept="image/*"></form>
+				</li>
+			</div>
+	    <p class="text-danger">备注：第一张图片默认为产品的封面图片</p>
+	  </div>
+	  <div class="form-group">
+	    <label for="detail">产品详情：</label>
+	    <script id="container" name="detail" type="text/plain"></script>
+	  </div>
+	  
+	  <button id='submit-btn' class="btn btn-primary btn-block">确定</button>
+
+	  <input id="csrf" type="hidden" name="_csrf" value="<%= csrfToken %>">
+		<input id="operate" type="hidden" name="operate" value="<%= operate %>">
+		<% if(locals.operate==1){ %> <input id="pro-index" type="hidden" name="index" value="<%= index %>"> <% } %>
+	</div>
+
+
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/ueditor/ueditor.config.js"></script>
+<script src="/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+$(function() {
+
+	var ue = UE.getEditor('container');
+	ue.ready(function() {
+		<% if(locals.operate==1) { %>
+		// 编辑时初始化
+		$('#name').val('<%= product.name %>');
+		$('#classify').val('<%= product.classify %>')
+		ue.setContent('<%- product.detail %>');
+		<% } %>
+	   
+	});
+
+	$('#upload-input').change(function(event) {
+		var $file = $(this);
+		if($file.val()){
+			var data = new FormData($('#upload-form')[0]);
+			$.ajax({
+				url: '/upload/product',
+				type: 'POST',
+				processData: false,  // 告诉jQuery不要去处理发送的数据
+  			contentType: false,  // 告诉jQuery不要去设置Content-Type请求头
+				// dataType: 'json',
+				data: data
+			})
+			.done(function(data) {
+				if(data.status===0){
+					$('#plus-li').before('<li><img src="'+data.data+'"><span class="delete">x</span></li>');
+				}else{
+					alert('上传失败，请重试');
+				}
+			})
+			.fail(function() {
+				alert('上传失败，请重试');
+			})
+			.always(function() {
+				;
+			});
+		}
+	});
+
+	$('body').on('click', '.delete', function(event) {
+		if(confirm('您确定要删除此照片？')){
+			$(this).parent().remove();
+		}
+	}).on('click', '#submit-btn', function(event) {
+		event.preventDefault();
+		var $this = $(this);
+		if($this.hasClass('js-requesting')){
+			return;
+		}
+		var name = $('#name').val(),
+				detail = ue.getContent(),
+				$imgs = $('#img-container li:not(#plus-li)');
+		if(name.length===0 ){
+			$('#name').focus();
+			return false;
+		}
+		if($imgs.length===0){
+			alert('请上传产品图片');
+			return false;
+		}
+		if( !ue.hasContents() ){
+			ue.focus();
+			return false;
+		}
+		var img_arr = [];
+		$imgs.each(function(index, el) {
+			var img = $(el).children('img').attr('src');
+			img_arr.push(img);
+		});
+		var operate = $('#operate').val(),
+				param = {name: name, classify: $('#classify').val(), detail: detail, imgs: img_arr, operate: operate, _csrf: $('#csrf').val()};
+		if(operate==1){
+			param.index = $('#pro-index').val();
+		}
+		$this.addClass('js-requesting');
+		$.ajax({
+			url: '/manage/editProduct',
+			type: 'POST',
+			dataType: 'json',
+			data: param,
+		})
+		.done(function(data) {
+			if(data.status===0){
+				if(confirm('提交成功，您要预览该产品吗？')){
+					window.location = '/product?index='+data.data;
+				}
+			}else{
+				alert(data.data);
+			}
+		})
+		.fail(function() {
+			alert('提交失败，请重试');
+		})
+		.always(function() {
+			$this.removeClass('js-requesting');
+			$this = null;
+		});
+	});
+
+});
+</script>
+
+</body>
+</html>

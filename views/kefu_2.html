@@ -1,0 +1,71 @@
+<style type="text/css">
+  .fixed-box {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    margin-top: -50px;
+    z-index: 9;
+  }
+  .fixed-box > li {
+    width: 47px;
+    height: 47px;
+    margin-bottom: 2px;
+    text-align: center;
+    background-color: #029bdb;
+    cursor: pointer;
+  }
+  .fixed-box > li:before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
+  }
+  .fixed-box .to-top > img {
+    width: 30px;
+    vertical-align: middle;
+  }
+  .fixed-box .to-qq > img {
+    width: 25px;
+    vertical-align: middle;
+  }
+  .kefu {
+    display: none;
+    position: absolute;
+    left: -140px;
+    top: 49px;
+    width: 130px;
+    padding: 6px;
+    background-color: #029bdb;
+    cursor: default;
+  }
+  .kefu:hover,
+  .to-qq:hover+.kefu {
+    display: block;
+  }
+  .kefu .kefu-title {
+    width: 130px;
+  }
+  .kefu .kefu-content {
+    background-color: #fbfbfb;
+    text-align: center;
+    padding-top: 10px;
+  }
+  .kefu .kefu-content li {
+    padding-bottom: 6px;
+  }
+</style>
+<ul class="fixed-box">
+  <li class="to-top"><img src="./images/arrow.png"></li>
+  <li class="to-qq">
+    <img src="./images/qq.png">
+  </li>
+  <div class="kefu">
+    <img src="./images/kefu.jpg" class="kefu-title">
+    <ul class="kefu-content">
+      <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=619761977&amp;site=qq&amp;menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:412644012:51" alt="点击这里给我发消息" title="点击这里给我发消息"></a></li>
+      <li><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=568984308&amp;site=qq&amp;menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:502207193:51" alt="点击这里给我发消息" title="点击这里给我发消息"></a></li>
+    </ul>
+  </div>
+</ul>
+

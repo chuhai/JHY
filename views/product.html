@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司">
+	<meta name="keywords" content="电源适配器">
+	<title>深圳市骏泓源科技有限公司</title>
+	<link rel="stylesheet" href="css/common.css">
+	<style>
+		.center-container {
+			width: 70%;
+			min-width: 900px;
+			margin-left: auto;
+			margin-right: auto;
+			padding-bottom: 50px;
+			overflow: hidden;
+		}
+		h1 {
+			color: #777;
+		}
+		.classify-nav {
+			display: inline-block;
+			width: 20%;
+			line-height: 30px;
+			border: 2px solid #262933;
+			vertical-align: top;
+			cursor: pointer;
+		}
+		.classify-nav .title {
+			line-height: 46px;
+			text-indent: 14px;
+			color: #fff;
+			font-size: 20px;
+			background-color: #262933;
+		}
+		.classify-nav .nav {
+			position: relative;
+			display: block;
+			line-height: 36px;
+			text-indent: 32px;
+			color: #fff;
+			background-color: #262933;
+		}
+		.classify-nav .nav.active,
+		.classify-nav .nav:hover {
+			background-color: #222;
+		}
+		.classify-nav .nav:before {
+			content: '';
+			position: absolute;
+			left: 14px;
+			top: 6px;
+			width: 0;
+		  height: 0;
+		  margin-right: 8px;
+		  margin-top: 3px;
+		  border-left: 8px solid #355699;
+		  border-top: 8px solid transparent;
+		  border-bottom: 8px solid transparent;
+		}
+		/*.classify-nav .active:before {
+			left: 10px;
+			top: 10px;
+			border-top: 8px solid #355699;
+		  border-left: 8px solid transparent;
+		  border-right: 8px solid transparent;
+		  border-bottom: none;
+		}*/
+
+		.product-container {
+			display: inline-block;
+			width: 78%;
+		}
+		.product-container li {
+			display: inline-block;
+			width: 20%;
+			padding: 3px;
+			margin-left: 3%;
+			margin-bottom: 20px;
+			box-shadow: 0 0 2px 1px #ddd;
+		}
+		.product-container li img {
+			display: block;
+			width: 100%;
+			height: 128px;
+		}
+		.product-container li p {
+			line-height: 30px;
+			text-align: center;
+			color: #fff;
+			background-color: #335594;
+		}
+		
+	</style>
+</head>
+<body class="has-footer">
+	<%- include('header.html', {nav: 1}) %>
+
+	<div class="center-container">
+		<h1>产品浏览</h1>
+		<div class="classify-nav" id="classify-nav">
+			<p class="title">产品分类</p>
+			<a href="/product?type=0" class="nav <% if(locals.classify==0){ %>active<% } %>">电源适配器</a>
+			<a href="/product?type=1" class="nav <% if(locals.classify==1){ %>active<% } %>">锂电池充电器</a>
+			<a href="/product?type=2" class="nav <% if(locals.classify==2){ %>active<% } %>">USB充电器</a>
+		</div>
+
+		<ul class="product-container">
+			<% products.forEach(function(doc){ %>
+			<li><a href="/product?index=<%= doc.index %>">
+				<img src="<%= doc.imgs[0] %>">
+				<p><%= doc.name %></p>
+			</a></li>
+			<% }); %>
+
+			<p class="pagination" id="pagination">
+				<a href="#" <% if(locals.page==1){ %> class="disabled"  <% } %>  aria-label="Previous">&lt&lt</a><a href="#" <% if(locals.page==locals.amount || locals.amount<2){ %> class="disabled"  <% } %>  aria-label="Next">&gt&gt</a>
+			</p>
+		</ul>
+
+	</div>
+	
+<%- include('kefu.html') %>
+<%- include('footer.html') %>
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script>
+	(function(){	
+		var page = +<%= locals.page %>,
+				amount = +<%= locals.amount %>,
+				paginationHtml = '',
+				ellipsisHtml = '<a href="#" class="ellipsis">...</a>';
+		if(amount<1){return false;}
+		if(amount>10){
+			if(page<8){
+				for (var i = 1; i < 9; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				paginationHtml += ellipsisHtml + '<a data-page="'+amount+'" href="#">'+amount+'</a>';
+			}else if(page>amount-7){
+				paginationHtml += '<a data-page="1" href="#">1</a>' + ellipsisHtml;
+				for (var i = amount-7; i <=amount; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				
+			}else{
+				paginationHtml += '<a data-page="1" href="#">1</a>' + ellipsisHtml;
+				var temp = page+3;
+				for (var i = page-3; i <temp; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				paginationHtml += ellipsisHtml + '<a data-page="'+amount+'" href="#">'+amount+'</a>';
+			}
+		}else{
+			for (var i = 1; i <= amount; i++) {
+				paginationHtml += parsePage(page, i);
+			}
+		}
+		$('#pagination a').eq(0).after(paginationHtml);
+	})();
+	function parsePage(targetPage, curPage){
+		var _class = targetPage===curPage ? 'class="active"' : '',
+				_html = '<a '+_class+' data-page="'+curPage+'" href="#">'+curPage+'</a>';
+		return _html;
+	}
+	$('#pagination').on('click', 'a', function(event) {
+		event.preventDefault();
+		var $this = $(this);
+		if($this.hasClass('disabled')||$this.hasClass('active')){
+			return false;
+		}
+		var $type = $('#classify-nav .active'),
+				label = $this.attr('aria-label'),
+				page;
+		switch(label){
+			case 'Previous':
+				page = $this.siblings('.active').attr('data-page') - 1;
+				break;
+			case 'Next':
+				page = +$this.siblings('.active').attr('data-page') + 1;
+				break;
+			default:
+				page = $this.attr('data-page');
+		}
+		var url = $type.length ? ($type.attr('href')+'&page='+page) : ('/product?page='+page);
+		window.location = url;
+	});
+</script>
+
+</body>
+</html>

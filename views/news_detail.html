@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司">
+	<meta name="keywords" content="电源适配器">
+	<title><%= news.title %></title>
+	<link rel="stylesheet" href="css/common.css">
+	<style>
+		.news-detail {
+			width: 50%;
+			padding-bottom: 30px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 10px;
+		}
+		.news-detail .title {
+			position: relative;
+			margin-top: 50px;
+			margin-bottom: 30px;
+			color: #ea8d1f;
+			font-size: 26px;
+		}
+		.title .date {
+			position: absolute;
+			left: -100px;
+			top: -15px;
+			width: 60px;
+			height: 60px;
+			text-align: center;
+			border-radius: 50%;
+			background-color: #335594;
+			color: #fff;
+			font-size: 14px;
+		}
+		.title .date p:first-child {
+    	font-size: 30px;
+    	padding-top: 8px;
+    	padding-bottom: 2px;
+		}
+		.news-detail .relate {
+			margin-top: 30px;
+			text-align: right;
+		}
+		.news-detail .relate a {
+			padding: 6px 10px;
+			margin-left: 6px;
+			background-color: #335594;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<%- include('header.html', {nav: 2}) %>
+
+	<div class="news-detail">
+		<ul class="breadcrumb">
+		  <li><a href="/">主页</a></li>
+		  <li><a href="/news">新闻中心</a></li>
+		  <li class="active">新闻详情</li>
+		</ul>
+		<div class="title">
+			<%= news.title %>
+			<div class="date"><p><%= news.day %></p><p><%= news.month %></p></div>
+		</div>
+		<div class="content"><%- news.content %></div>
+		<p class="relate"><a href="#">&lt 上一篇</a><a href="#">下一篇 &gt</a></p>
+	</div>
+
+	<%- include('kefu.html') %>
+	<%- include('footer.html') %>
+
+<script>
+
+</script>
+</body>
+</html>

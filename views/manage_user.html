@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /> 
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<title>骏泓源-用户管理</title>
+<style type="text/css">
+	.content{
+		padding-top: 10px;
+		padding-right: 10px;
+	  padding-left: 110px;
+	}
+	.margin-bottom {
+	  margin-bottom: 10px;
+	}
+	nav {
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+
+<%- include('nav.html', {nav: 3}) %>
+<div class="content">
+
+	<button type="button" class="btn btn-primary margin-bottom" data-toggle="modal" data-target="#password-dialog">修改密码</button>
+
+<% if(locals.priority<=1){ %>
+	<table class="table table-striped table-hover table-bordered" id="user-table">
+	  <thead>
+	  	<th>邮箱</th><th>用户名</th><th>用户权限</th><th>注册时间</th><th>操作</th>
+	  </thead>
+	  <tbody>
+	  <% users.forEach(function(user){ %>
+	    <tr data-id="<%= user._id %>">
+	    	<td><%= user.email %></td>
+	    	<td><%= user.nickname %></td>
+	    	<td><%= ['超级管理员','管理员','普通用户','未审核','黑名单用户'][user.priority] %></td>
+	    	<td><%= user.time %></td>
+	    	<td>
+	    		<select class="js-operate form-control">
+	    			<option disabled selected>无</option>
+	    			<% if(locals.priority===0){ %><option value="1">设置为管理员</option><% } %>
+	    			<option value="2">设置为普通用户</option>
+	    			<option value="4">拉入黑名单</option>
+	    		</select>
+	    	</td>
+	    </tr>
+	  <% }); %>
+	  	
+	  </tbody>
+	</table>
+	<nav>
+		<ul class="pagination" id="pagination">
+	    <li <% if(locals.page==1){ %> class="disabled"  <% } %> >
+	      <a href="#" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	      </a>
+	    </li>
+	    
+	    <li <% if(locals.page==locals.amount || locals.amount<2){ %> class="disabled"  <% } %> >
+	      <a href="#" aria-label="Next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
+<% } %>
+
+	<div class="modal fade" id="password-dialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog  modal-sm" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">修改登陆密码</h4>
+	      </div>
+	      <div class="modal-body">
+	         <form>
+	          <div class="form-group">
+	            <label for="old-psw" class="control-label">旧密码:</label>
+	            <input type="password" class="form-control" id="old-psw" placeholder="请输入旧密码">
+	          </div>
+	          <div class="form-group">
+	            <label for="new-psw" class="control-label">新密码:</label>
+	            <input type="password" class="form-control" id="new-psw" placeholder="请输入新密码">
+	          </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	        <button type="button" class="btn btn-primary" id="change-psw-btn">确定</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+</div>
+<input id="csrf" type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+$(function() {
+
+	$('#change-psw-btn').click(function(event) {
+		var oldPsw = $('#old-psw').val(),
+				newPsw = $('#new-psw').val();
+		if(oldPsw.length===0 ){
+			$('#new-psw').focus();
+			return false;
+		}
+		if(newPsw.length===0 ){
+			$('#new-psw').focus();
+			return false;
+		}
+		$.ajax({
+			url: '/user/changePassword',
+			type: 'POST',
+			dataType: 'json',
+			data: {old_psw: oldPsw, new_psw: newPsw, _csrf: $('#csrf').val()},
+		})
+		.done(function(data) {
+			if(data.status===0){
+				alert('修改成功');
+				$('#password-dialog').modal('hide');
+			}else if(data.status===1){
+				alert('旧密码错误，请重试');
+			}else{
+				alert('操作数据库不成功，请重试');
+			}
+		})
+		.fail(function() {
+			alert('修改失败，请重试');
+		})
+		.always(function() {
+			$('#password-dialog input').val('');
+		});
+		
+	});
+
+<% if(locals.priority<=1){ %>
+	(function(){
+		var page = +<%= locals.page %>,
+				amount = +<%= locals.amount %>,
+				paginationHtml = '',
+				ellipsisHtml = '<li class="disabled"><a href="#">...</a></li>';
+		if(amount<1){return false;}
+		if(amount>10){
+			if(page<8){
+				for (var i = 1; i < 9; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				paginationHtml += ellipsisHtml + '<li data-page="'+amount+'"><a href="#">'+amount+'</a></li>';
+			}else if(page>amount-7){
+				paginationHtml += '<li data-page="1"><a href="#">1</a></li>' + ellipsisHtml;
+				for (var i = amount-7; i <=amount; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				
+			}else{
+				paginationHtml += '<li data-page="1"><a href="#">1</a></li>' + ellipsisHtml;
+				var temp = page+3;
+				for (var i = page-3; i <temp; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				paginationHtml += ellipsisHtml + '<li data-page="'+amount+'"><a href="#">'+amount+'</a></li>';
+			}
+		}else{
+			for (var i = 1; i <= amount; i++) {
+				paginationHtml += parsePage(page, i);
+			}
+		}
+		$('#pagination li').eq(0).after(paginationHtml);
+	})();
+	function parsePage(targetPage, curPage){
+		var _class = targetPage===curPage ? 'class="active"' : '',
+				_html = '<li '+_class+' data-page="'+curPage+'"><a href="#">'+curPage+'</a></li>';
+		return _html;
+	}
+	$('#pagination').on('click', 'li', function(event) {
+		var $li = $(this);
+		if($li.hasClass('disabled')||$li.hasClass('active')){
+			return false;
+		}
+		var label = $li.children('a').attr('aria-label'),
+				page;
+		switch(label){
+			case 'Previous':
+				page = $li.siblings('.active').attr('data-page') - 1;
+				break;
+			case 'Next':
+				page = +$li.siblings('.active').attr('data-page') + 1;
+				break;
+			default:
+				page = $li.attr('data-page');
+		}
+		window.location = '/manage/user?page='+page;
+	}).on('click', 'a', function(event) {
+		event.preventDefault();
+	});
+
+	$('#user-table').on('change', '.js-operate', function(event) {
+		var operation = $(this).val(),
+				$tr = $(this).closest('tr'),
+				userId = $tr.attr('data-id');
+		$.ajax({
+			url: '/user/changePriority',
+			type: 'POST',
+			dataType: 'json',
+			data: {user_id: userId, priority: operation, _csrf: $('#csrf').val()},
+		})
+		.done(function(data) {
+			if(data.status===0){
+				var tip = ['管理员','普通用户','','黑名单用户'][operation-1];
+				$tr.children('td').eq(2).text(tip);
+				$tr = operation = tip = null;
+				alert('修改成功');
+			}else if(data.status===1){
+				alert('你没有这个权限');
+			}else{
+				alert('操作数据库不成功，请重试');
+			}
+		})
+		.fail(function() {
+			alert('修改失败，请重试');
+		})
+		.always(function() {
+			;
+		});
+	});
+	
+<%}%>
+
+});
+</script>
+
+</body>
+</html>

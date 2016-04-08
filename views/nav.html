@@ -1,0 +1,39 @@
+<style type="text/css">
+	.navigator{
+	  width: 100px;
+	  height: 100%;
+	  position: fixed;
+	  left: 0;
+	  top: 0;
+	  text-align: center;
+	  background-color: #2e3d49;
+	}
+	.navigator a {
+		display: block;
+		color: white;
+	}
+	.navigator div{
+	  position: relative;
+	  top: 30%;
+	  font-size: 16px;
+	}
+	.navigator div a{
+	  line-height: 40px;
+	  cursor: pointer;
+	}
+	.navigator div a:hover,
+	.nav-active{
+  	background-color: #000;
+  	text-decoration: none;
+	}
+</style>
+<div class="navigator">
+	
+	<div>
+		<a href="/manage" <% if(nav==0) { %> class="nav-active" <% } %> >流量统计</a>
+		<a href="/manage/product" <% if(nav==1) { %> class="nav-active" <% } %> >产品管理</a>
+		<a href="/manage/news" <% if(nav==2) { %> class="nav-active" <% } %> >新闻管理</a>
+		<a href="/manage/user" <% if(nav==3) { %> class="nav-active" <% } %> >用户管理</a> 
+		<a href="/logout" style="margin-top: 50px;">退出</a>
+	</div>
+</div>

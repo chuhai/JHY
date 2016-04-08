@@ -1,0 +1,19 @@
+{
+  "name": "JHY",
+  "description": "JHY app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "ejs": "^2.4.1",
+    "express": "4.13.4",
+    "express-session": "^1.13.0",
+    "moment": "^2.12.0",
+    "mongoose": "^4.4.7",
+    "morgan": "^1.7.0",
+    "multer": "^1.1.0",
+    "serve-favicon": "^2.3.0",
+    "ueditor": "^1.1.1"
+  }
+}

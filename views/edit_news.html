@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<title>骏泓源-新增新闻</title>
+<style type="text/css">
+	body {
+		padding: 20px 20%;
+	}
+</style>
+</head>
+<body>
+
+	<form role="form" >
+	  <div class="form-group">
+	    <label for="title">新闻标题：</label>
+	    <input type="text" name="title" class="form-control" id="title" placeholder="新闻标题">
+	  </div>
+	  <div class="form-group">
+	    <label for="content">新闻内容：</label>
+	    <script id="container" name="content" type="text/plain"></script>
+	    <!-- <textarea id="content" class="form-control" name="content" rows="3"></textarea> -->
+	  </div>
+	  
+	  <button id='submit-btn' class="btn btn-primary btn-block">确定</button>
+
+	  <input id="csrf" type="hidden" name="_csrf" value="<%= csrfToken %>">
+		<input id="operate" type="hidden" name="operate" value="<%= operate %>">
+		<% if(locals.operate==1){ %> <input id="news-index" type="hidden" name="index" value="<%= index %>"> <% } %>
+	</form>
+
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/ueditor/ueditor.config.js"></script>
+<script src="/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+$(function() {
+
+	var ue = UE.getEditor('container');
+	ue.ready(function() {
+		<% if(locals.operate==1) { %>
+		// 编辑时初始化
+		$('#title').val('<%= news.title %>');
+		ue.setContent('<%- news.content %>');
+		<% } %>
+	   
+	});
+
+	$('#submit-btn').click(function(event) {
+		event.preventDefault();
+		var $this = $(this);
+		if($this.hasClass('js-requesting')){
+			return;
+		}
+		var title = $('#title').val(),
+				content = ue.getContent();
+		if(title.length===0 ){
+			$('#title').focus();
+			return false;
+		}
+		if( !ue.hasContents() ){
+			ue.focus();
+			return false;
+		}
+		var operate = $('#operate').val(),
+				param = {title: title, content: content, operate: operate, _csrf: $('#csrf').val()};
+		if(operate==1){
+			param.index = $('#news-index').val();
+		}
+		$this.addClass('js-requesting');
+		$.ajax({
+			url: '/manage/editNews',
+			type: 'POST',
+			dataType: 'json',
+			data: param,
+		})
+		.done(function(data) {
+			if(data.status===0){
+				if(confirm('提交成功，您要预览该新闻吗？')){
+					window.location = '/news?index='+data.data;
+				}
+			}else{
+				alert(data.data);
+			}
+		})
+		.fail(function() {
+			alert('提交失败，请重试');
+		})
+		.always(function() {
+			$this.removeClass('js-requesting');
+			$this = null;
+		});
+	});
+
+});
+</script>
+
+</body>
+</html>

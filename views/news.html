@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司">
+	<meta name="keywords" content="电源适配器">
+	<title>深圳市骏泓源科技有限公司</title>
+	<link rel="stylesheet" href="css/common.css">
+	<style>
+		.news-container {
+			width: 50%;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 10px;
+		}
+		.news-container > li {
+			margin-top: 30px;
+		}
+		.news-container .date {
+			display: inline-block;
+			width: 60px;
+			height: 60px;
+			margin-right: 30px;
+			text-align: center;
+			border-radius: 50%;
+			background-color: #335594;
+			color: #fff;
+			vertical-align: middle;
+			font-size: 14px
+		}
+		.news-container .date p:first-child {
+    	font-size: 30px;
+    	padding-top: 8px;
+    	padding-bottom: 2px;
+		}
+		.news-container > li > a {
+			color: #666;
+			font-size: 24px;
+		}
+		.news-container > li > a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body class="has-footer">
+	<%- include('header.html', {nav: 2}) %>
+	<% if(news.length) { %>
+	<ul class="news-container">
+
+		<ul class="breadcrumb">
+			<span class="active">当前位置：</span>
+		  <li><a href="/">主页</a></li>
+		  <li class="active">新闻中心</li>
+		</ul>
+
+		<% news.forEach(function(doc){ %>
+		<li>
+			<div class="date"><p><%= doc.day %></p><p><%= doc.month %></p></div>
+			<a href="/news?index=<%= doc.index %>"><%= doc.title %></a>
+		</li>
+		<% }); %>
+	</ul>
+	
+	<p class="pagination" id="pagination">
+		<a href="#" <% if(locals.page==1){ %> class="disabled"  <% } %>  aria-label="Previous">&lt&lt</a><a href="#" <% if(locals.page==locals.amount || locals.amount<2){ %> class="disabled"  <% } %>  aria-label="Next">&gt&gt</a>
+	</p>
+	<% } else { %>
+		<h1>暂时没有新闻哦</h1>
+	<% } %>
+	
+	<%- include('kefu.html') %>
+	<%- include('footer.html') %>
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script>
+	(function(){	
+		var page = +<%= locals.page %>,
+				amount = +<%= locals.amount %>,
+				paginationHtml = '',
+				ellipsisHtml = '<a href="#" class="ellipsis">...</a>';
+		if(amount<1){return false;}
+		if(amount>10){
+			if(page<8){
+				for (var i = 1; i < 9; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				paginationHtml += ellipsisHtml + '<a data-page="'+amount+'" href="#">'+amount+'</a>';
+			}else if(page>amount-7){
+				paginationHtml += '<a data-page="1" href="#">1</a>' + ellipsisHtml;
+				for (var i = amount-7; i <=amount; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				
+			}else{
+				paginationHtml += '<a data-page="1" href="#">1</a>' + ellipsisHtml;
+				var temp = page+3;
+				for (var i = page-3; i <temp; i++) {
+					paginationHtml += parsePage(page, i);
+				};
+				paginationHtml += ellipsisHtml + '<a data-page="'+amount+'" href="#">'+amount+'</a>';
+			}
+		}else{
+			for (var i = 1; i <= amount; i++) {
+				paginationHtml += parsePage(page, i);
+			}
+		}
+		$('#pagination a').eq(0).after(paginationHtml);
+	})();
+	function parsePage(targetPage, curPage){
+		var _class = targetPage===curPage ? 'class="active"' : '',
+				_html = '<a '+_class+' data-page="'+curPage+'" href="#">'+curPage+'</a>';
+		return _html;
+	}
+	$('#pagination').on('click', 'a', function(event) {
+		event.preventDefault();
+		var $this = $(this);
+		if($this.hasClass('disabled')||$this.hasClass('active')){
+			return false;
+		}
+		var label = $this.attr('aria-label'),
+				page;
+		switch(label){
+			case 'Previous':
+				page = $this.siblings('.active').attr('data-page') - 1;
+				break;
+			case 'Next':
+				page = +$this.siblings('.active').attr('data-page') + 1;
+				break;
+			default:
+				page = $this.attr('data-page');
+		}
+		window.location = '/news?page='+page;
+	});
+</script>
+</body>
+</html>

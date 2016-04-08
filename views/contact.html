@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司">
+	<meta name="keywords" content="电源适配器">
+	<title>深圳市骏泓源科技有限公司</title>
+	<link rel="stylesheet" href="css/common.css">
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=9WVseg8Ky6VrpfiKTawpOeNY"></script>
+	<style>
+		.center-container {
+			width: 80%;
+			min-width: 888px;
+			line-height: 40px;
+			margin-left: auto;
+			margin-right: auto;
+			color: #554f4f;
+			overflow: hidden;
+		}
+		.center-container a {
+			color: #554f4f;
+		}
+		.contacts {
+			margin-top: 86px;
+		}
+		.contacts > div {
+			display: inline-block;
+			width: 45%;
+			line-height: 40px;
+			vertical-align: middle;
+		}
+		#allmap {
+			height: 300px;
+			margin-left: 5%;
+		}
+
+	</style>
+</head>
+<body class="has-footer">
+	<%- include('header.html', {nav: 3}) %>
+
+	<div class="center-container">
+		<h1 class="white-title">联系我们</h1>
+		<div class="contacts">
+			<div>
+				<p>电话：86-0755-36850864</p>
+				<p>传真：86-0755-29914954</p>
+				<p>邮箱：<a href="mailto:service@junhongyuan.com" title="点我发邮件咨询">service@junhongyuan.com</a></p>
+				<p>地址：广东省深圳市宝安区西乡街道固戍沙湾村文昌路29号荣厦兴7楼</p>
+				<p>阿里巴巴店铺：<a href="http://shop1404752105813.1688.com" target="_blank">http://shop1404752105813.1688.com</a></p>
+			</div>
+			<div id="allmap">
+
+			</div>
+		</div>
+	</div>
+
+	<%- include('kefu.html') %>
+	<%- include('footer.html') %>
+
+<script type="text/javascript">
+	var map = new BMap.Map("allmap");
+	map.enableScrollWheelZoom(true);
+
+	// 创建地址解析器实例     
+	var myGeo = new BMap.Geocoder();      
+	// 将地址解析结果显示在地图上，并调整地图视野    
+	myGeo.getPoint("深圳市宝安区西乡街道固戍沙湾村文昌路29号荣厦兴", function(point){      
+    if (point) {      
+      map.centerAndZoom(point, 35);      
+      map.addOverlay(new BMap.Marker(point));      
+    }      
+  }, "深圳市");
+</script>
+</body>
+</html>
