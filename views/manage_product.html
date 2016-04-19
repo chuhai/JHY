@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /> 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <title>骏泓源-产品管理</title>
 <style type="text/css">
@@ -34,7 +33,7 @@
 	  <tbody>
 	  <% products.forEach(function(doc){ %>
 	    <tr data-index="<%= doc.index %>">
-	    	<td><%= doc.name %></td>
+	    	<td><a href="/product?index=<%= doc.index %>" target="_blank"><%= doc.name %></a></td>
 	    	<td><%= ['电源适配器','USB充电器','锂电池充电器'][doc.classify] %></td>
 	    	<td><%= doc.last_user %></td>
 	    	<td><%= doc.update_time %></td>
@@ -52,6 +51,9 @@
 	  <% }); %>
 	  	
 	  </tbody>
+	  <tfoot>
+	  	<p class="text-danger">备注：1.推荐产品会优先显示；2.删除的产品不会显示在公司产品列表中</p>
+	  </tfoot>
 	</table>
 	<nav>
 		<ul class="pagination" id="pagination">

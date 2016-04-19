@@ -7,6 +7,7 @@ module.exports = function(mongoose){
 		content: String,
 		first_user: String, // 创建新闻稿的人
 		last_user: String, // 最后一个修改新闻稿的人
+		recommend: {type: Number, default: 0}, // 是否推荐，0: 不推荐，1: 推荐
 		pv: {type: Number, default: 0},
 		ifDelete: {type: Number, default: 0} // 是否删除，0: 未删除，1: 删除 
 	}, { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } });

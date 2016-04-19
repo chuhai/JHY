@@ -25,7 +25,7 @@ app.engine('.html', require( 'ejs' ).__express);
 app.set('view engine', 'html');
 
 
-app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(path.join(__dirname,'public','favicon.ico')));
 app.use(logger('combined'));
 // app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -62,7 +62,8 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname, 'public'), function(req, res
 
     res.setHeader('Content-Type', 'application/json');
     res.redirect('/ueditor/ueditor.config.json')
-}}));
+  }
+}));
 
 //
 var router = require('./router.js')(app);

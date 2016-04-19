@@ -3,9 +3,9 @@
 <head>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司">
-	<meta name="keywords" content="电源适配器">
-	<title><%= news.title %></title>
+	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司是一家专注于电源适配器、锂电池充电器、USB充电器的生产厂家，可定制相关产品。">
+	<meta name="keywords" content="骏泓源，深圳市骏泓源科技有限公司，适配器，充电器，定制，电源适配器，锂电池充电器，USB充电器">
+	<title>电源适配器厂家--骏泓源电源｜电源适配器｜锂电池充电器｜USB充电器｜深圳市骏泓源科技有限公司</title>
 	<link rel="stylesheet" href="css/common.css">
 	<style>
 		.news-detail {
@@ -41,31 +41,47 @@
 		}
 		.news-detail .relate {
 			margin-top: 30px;
-			text-align: right;
 		}
 		.news-detail .relate a {
-			padding: 6px 10px;
-			margin-left: 6px;
-			background-color: #335594;
-			color: #fff;
+			line-height: 30px;
+			color: #888;
+		}
+		.news-detail .relate .next {
+			float: right;
+		}
+		.news-detail .relate a[href="####"] {
+			cursor: text;
+			color: #ddd;
 		}
 	</style>
 </head>
 <body>
 	<%- include('header.html', {nav: 2}) %>
-
+	<div class="breadcrumb-wrap"><ul class="breadcrumb">
+		<span class="active">当前位置：</span>
+	  <li><a href="/">主页</a></li>
+	  <li><a href="/news">新闻中心</a></li>
+	  <li class="active">新闻详情</li>
+	</ul></div>
 	<div class="news-detail">
-		<ul class="breadcrumb">
-		  <li><a href="/">主页</a></li>
-		  <li><a href="/news">新闻中心</a></li>
-		  <li class="active">新闻详情</li>
-		</ul>
 		<div class="title">
 			<%= news.title %>
 			<div class="date"><p><%= news.day %></p><p><%= news.month %></p></div>
 		</div>
 		<div class="content"><%- news.content %></div>
-		<p class="relate"><a href="#">&lt 上一篇</a><a href="#">下一篇 &gt</a></p>
+		<p class="relate">
+			<% if(locals.pre != null){ %>
+			<a href="news?index=<%= locals.pre.index %>">&lt 上一篇：<%= locals.pre.title %></a>
+			<% }else{ %>
+			<a href="####">&lt 上一篇：无</a>
+			<% } %>
+
+			<% if(locals.after != null){ %>
+			<a class="next" href="news?index=<%= locals.after.index %>">下一篇：<%= locals.after.title %> &gt</a>
+			<% }else{ %>
+			<a class="next" href="####">下一篇：无 &gt</a>
+			<% } %>
+		</p>
 	</div>
 
 	<%- include('kefu.html') %>

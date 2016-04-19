@@ -3,14 +3,10 @@
 <head>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司">
-	<meta name="keywords" content="电源适配器">
-	<title>首页</title>
-	<link rel="shortcut icon" href="" type="image/x-icon">
+	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司是一家专注于电源适配器、锂电池充电器、USB充电器的生产厂家，可定制相关产品。">
+	<meta name="keywords" content="骏泓源，深圳市骏泓源科技有限公司，适配器，充电器，定制，电源适配器，锂电池充电器，USB充电器">
+	<title>电源适配器厂家--骏泓源电源｜电源适配器｜锂电池充电器｜USB充电器｜深圳市骏泓源科技有限公司</title>
 	<link rel="stylesheet" href="css/common.css">
-	<script src="js/jquery-1.11.1.min.js"></script>
-	<script src="js/common.js"></script>
-	<script src="js/jun.js"></script>
 	<style>
 		.whole-container {
 			width: 100%;
@@ -33,35 +29,51 @@
 			overflow: hidden;
 		}
 		.company-desc-wrap {
-			width: 100%;
-			min-height: 200px;
-			background-image: url(images/company_bg.jpg);
-			background-repeat: no-repeat;
-			background-size: 100% 100%;
+			position: relative;
+			padding: 8px;
+			border: 1px solid #ddd;
 			box-shadow: 0 0 1px 1px #8d8f96;
+			background-color: #fff;
 		}
 		.company-desc-wrap .company-desc {
-			width: 45%;
-			padding-left: 60px;
-			padding-top: 20px;
-			padding-bottom: 60px;
+			width: 51%;
+			padding-left: 3%;
+			padding-right: 3%;
+			padding-top: 1%;
+			padding-bottom: 3%;
 			color: #8d8f96;
+			background-color: #283643;
+			overflow: hidden;
 		}
 		.company-desc-wrap h1 {
 			color: #fff;
 		}
-		.index-btn {
-			float: right;
+		.company-desc-wrap .for-img {
+			display: block;
+			position: absolute;
+			left: 56%;
+			right: 8px;
+			top: 8px;
+			bottom: 8px;
+		}
+		.company-desc-wrap img {
+			width: 100%;
+			height: 100%;
+		}
+		.company-desc-wrap .for-btn {
+			margin-top: 10px;
+			text-align: right;
+		}
+		.company-desc-wrap a {
 			padding: 5px 15px;
 			margin-top: 15px;
 			color: #fff;
 			border: 2px solid #667575;
 			border-radius: 8px;
 		}
-		.index-btn:hover {
+		.company-desc-wrap a:hover {
 			color: #ddd;
 			border-color: #ddd;
-			/*background-color: #666;*/
 		}
 		.quality-tip {
 			padding-top: 60px;
@@ -78,9 +90,10 @@
 		}
 		.publicity {
 			display: inline-block;
-			width: 26%;
-			margin-right: 10%;
+			width: 26.3%;
+			margin-right: 7%;
 			padding-top: 30px;
+			font-size: 16px;
 			text-align: center;
 			vertical-align: top;
 		}
@@ -89,22 +102,30 @@
 		}
 		.index-title {
 			padding-top: 60px;
-			padding-bottom: 60px;
+			padding-bottom: 30px;
 			font-size: 12px;
 			text-align: center;
 			color: #ddd;
 		}
-		.index-title span {
+		.index-title b {
 			margin-left: 20px;
 			margin-right: 20px;
 			color: #093059;
 			font-size: 20px;
+			vertical-align: middle;
+		}
+		.index-title .line {
+			display: inline-block;
+			width: 20%;
+			border-top: 1px dashed #ddd;
+			vertical-align: middle;
 		}
 		.index-product {
 			display: inline-block;
 			width: 28%;
 			padding: 5px;
-			margin-right: 5%;
+			margin-right: 4%;
+			font-size: 16px;
 			border: 1px solid #ddd;
 			box-shadow: 0 0 1px #ddd;
 		}
@@ -122,21 +143,21 @@
 			background-color: #335594;
 		}
 		.index-news {
-			line-height: 40px;
+			padding-left: 20px;
+			line-height: 28px;
+    	border-left: 4px solid #0066c0;
+    	margin-bottom: 20px;
 			color: #606269;
-			font-size: 16px;
-		}
-		.index-news .title {
-			display: inline-block;
-			width: 75%;
-			text-indent: 12px;
+			font-size: 18px;
 			overflow: hidden;
 			text-overflow: ellipsis;
 			white-space: nowrap;
 		}
+		.index-news:hover .title {
+			text-decoration: underline;
+		}
 		.index-news .date {
-			float: right;
-			margin-right: 20px;
+			margin-right: 36px;
 		}
 
 	</style>
@@ -145,14 +166,15 @@
 	<%- include('header.html', {nav: 0}) %>
 
 	<div class="whole-container">
-		<p class="hint-tip">主营产品：开关电源/适配器/充电器/工业电源</p>
+		<p class="hint-tip">主营产品：电源适配器/锂电池充电器/USB充电器</p>
 		<div class="center-container">
 			<div class="company-desc-wrap">
 				<div class="company-desc">
 					<h1>深圳市骏泓源科技有限公司</h1>
-					<p>深圳市骏泓源科技有限公司成立于2009年，现有十余种AC/DC的产品（开关电源，电源适配器，充电器，硬盘盒电源，机顶盒电源，LED电源，恒流电源等），功率覆盖6W到100W，甚至更高等级的也在开发中，广泛应用于LED照明、通讯、电力、工业控制、仪器仪表、医疗、铁路及其他高科技领域。</p>
-					<a href="#" class="index-btn">了解我们</a>
+					<p style="text-indent: 28px;">深圳市骏泓源科技有限公司成立于2014年，现有十余种AC/DC的产品（开关电源，电源适配器，充电器，硬盘盒电源，机顶盒电源，LED电源，恒流电源等），功率覆盖6W到100W，甚至更高等级的也在开发中，广泛应用于LED照明、通讯、电力、工业控制、仪器仪表、医疗、铁路及其他高科技领域。</p>
+					<p class="for-btn"><a href="/about" target="_blank">了解更多</a></p>
 				</div>
+				<div class="for-img"><img src="images/eagle.jpg"></div>
 			</div>
 			<p class="quality-tip">
 				环保 &nbsp;高效 &nbsp;绿色产品 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 坚守高品质 &nbsp;安全美观 &nbsp;值得信赖
@@ -160,7 +182,7 @@
 		</div>
 	</div>
 	<div class="whole-container publicity-container">
-		<ul class="center-container">
+		<ul class="center-container" style="font-size: 0;">
 			<li class="publicity">
 				<img src="images/icon_1.png">
 				<h3>我们的使命</h3>
@@ -178,32 +200,33 @@
 			</li>
 		</ul>
 	</div>
-	<p class="index-title">------------------------ <span>我们的产品</span> ------------------------</p>
-	<ul class="center-container">
-		<a href="#" class="index-product"><li>
+	<p class="index-title"><span class="line"></span> <b>我们的产品</b> <span class="line"></span></p>
+	<ul class="center-container" style="font-size: 0;">
+		<a href="/product?type=0" class="index-product" target="_blank"><li>
 			<img src="images/yuan_1.jpg">
 			<p>电源适配器</p>
 		</li></a>
-		<a href="#" class="index-product"><li>
+		<a href="/product?type=1" class="index-product" target="_blank"><li>
 			<img src="images/yuan_2.jpg">
-			<p>电池适配器</p>
+			<p>锂电池充电器</p>
 		</li></a>
-		<a href="#" class="index-product"><li>
+		<a href="/product?type=2" class="index-product" target="_blank"><li>
 			<img src="images/yuan_3.jpg">
-			<p>车载充电器</p>
+			<p>USB充电器</p>
 		</li></a>
 	</ul>
-	<p class="index-title">------------------------ <span>行业动态</span> ------------------------</p>
-	<ul class="center-container">
-		<a href="#"><li class="index-news">
-			<span class="title">骏泓源产品销量突破百万</span><span class="date">2015-07-01</span>
+	<p class="index-title"><span class="line"></span> <b>行业动态</b> <span class="line"></span></p>
+	<ul class="center-container" style="padding-bottom: 30px;">
+	<% if(news!=null){ %>
+		<% news.forEach(function(doc){ %>
+		<a href="/news?index<%= doc.index %>" target="_blank"><li class="index-news">
+			<span class="date"><%= doc.add_time %></span><span class="title"><%= doc.title %></span>
 		</li></a>
-		<a href="#"><li class="index-news">
-			<span class="title">骏泓源产品销量突破百万</span><span class="date">2015-07-02</span>
-		</li></a>
-		<a href="#"><li class="index-news">
-			<span class="title">骏泓源产品销量突破百万</span><span class="date">2015-07-03</span>
-		</li></a>
+		<% }); %>
+	<% }else{ %>
+		<h3>暂无相关新闻</h3>
+	<% } %>
+
 	</ul>
 	
 	<%- include('kefu.html') %>

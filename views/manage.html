@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /> 
 <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <title>骏泓源-后台管理</title>
 <style type="text/css">
@@ -12,13 +11,29 @@
 		padding-right: 10px;
 	  padding-left: 110px;
 	}
+
+	.for-baidu {
+		position: absolute;
+		left: 110px;
+		right: 10px;
+		top: 100px;
+		bottom: 10px;
+		/*width: 100%;
+		height: 500px;*/
+	}
+	iframe {
+		width: 100%;
+		height: 100%;
+	}
 </style>
 </head>
 <body>
 
 <%- include('nav.html', {nav: 0}) %>
 <div class="content">
-	 <h1>Welcome, <%= email %> </h1>
+	 <h2>欢迎您, <%= name %> </h2>
+	 <p class="text-danger">通过登录百度统计网站查看网站的访问情况，登陆帐号：junhongyuan，密码：Junhongyuan668</p>
+	 <div class="for-baidu"><iframe src="http://tongji.baidu.com/web/20087894/overview/sole?siteId=8461285"></iframe></div>
 </div>
 
 </body>

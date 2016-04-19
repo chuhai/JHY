@@ -3,15 +3,15 @@
 <head>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司">
-	<meta name="keywords" content="电源适配器">
-	<title>深圳市骏泓源科技有限公司</title>
+	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司是一家专注于电源适配器、锂电池充电器、USB充电器的生产厂家，可定制相关产品。">
+	<meta name="keywords" content="骏泓源，深圳市骏泓源科技有限公司，适配器，充电器，定制，电源适配器，锂电池充电器，USB充电器">
+	<title>电源适配器厂家--骏泓源电源｜电源适配器｜锂电池充电器｜USB充电器｜深圳市骏泓源科技有限公司</title>
 	<link rel="stylesheet" href="css/common.css">
 	<style>
 		.news-container {
-			width: 50%;
-			margin-left: auto;
-			margin-right: auto;
+			width: 59%;
+			margin-left: 10%;
+			/*margin-right: auto;*/
 			margin-top: 10px;
 		}
 		.news-container > li {
@@ -41,30 +41,78 @@
 		.news-container > li > a:hover {
 			text-decoration: underline;
 		}
+
+		.onsale-container {
+			position: absolute;
+			right: 10%;
+			top: 128px;
+			width: 20%;
+		}
+		.onsale-wrap {
+			margin-top: 0;
+			padding-left: 0;
+			font-size: 14px;
+			list-style-position: inside;
+			border: 1px solid #d4d4d4;
+		}
+		.onsale-wrap p {
+			line-height: 36px;
+			text-indent: 10px;
+			background-color: #0066c0;
+			color: #fff;
+		}
+		.onsale-wrap li {
+			width: 96%;
+			line-height: 26px;
+			padding-left: 2%;
+			padding-top: 6px;
+			padding-bottom: 6px;
+			border-bottom: 1px solid #d4d4d4;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		.onsale-wrap li:last-child {
+			border-bottom: 0;
+		}
+		.onsale-wrap li:hover {
+			text-decoration: underline;
+		}
 	</style>
 </head>
 <body class="has-footer">
 	<%- include('header.html', {nav: 2}) %>
+	<div class="breadcrumb-wrap"><ul class="breadcrumb">
+		<span class="active">当前位置：</span>
+	  <li><a href="/">主页</a></li>
+	  <li class="active">新闻中心</li>
+	</ul></div>
 	<% if(news.length) { %>
 	<ul class="news-container">
-
-		<ul class="breadcrumb">
-			<span class="active">当前位置：</span>
-		  <li><a href="/">主页</a></li>
-		  <li class="active">新闻中心</li>
-		</ul>
-
 		<% news.forEach(function(doc){ %>
 		<li>
 			<div class="date"><p><%= doc.day %></p><p><%= doc.month %></p></div>
 			<a href="/news?index=<%= doc.index %>"><%= doc.title %></a>
 		</li>
 		<% }); %>
+
+		<p class="pagination" id="pagination">
+			<a href="#" <% if(locals.page==1){ %> class="disabled"  <% } %>  aria-label="Previous">&lt&lt</a><a href="#" <% if(locals.page==locals.amount || locals.amount<2){ %> class="disabled"  <% } %>  aria-label="Next">&gt&gt</a>
+		</p>
 	</ul>
-	
-	<p class="pagination" id="pagination">
-		<a href="#" <% if(locals.page==1){ %> class="disabled"  <% } %>  aria-label="Previous">&lt&lt</a><a href="#" <% if(locals.page==locals.amount || locals.amount<2){ %> class="disabled"  <% } %>  aria-label="Next">&gt&gt</a>
-	</p>
+
+	<div class="onsale-container">
+		<ol class="onsale-wrap">
+			<p>热点新闻</p>
+		<% if(locals.hots.length>0){ %>
+			<% hots.forEach(function(doc){ %>
+			<li><a href="/news?index=<%= doc.index %>" target="_blank"><%= doc.title %></a></li>
+			<% }); %>
+		<% }else{ %>
+			<span>暂无相关新闻</span>
+		<% } %>
+		</ol>
+	</div>
 	<% } else { %>
 		<h1>暂时没有新闻哦</h1>
 	<% } %>

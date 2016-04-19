@@ -6,8 +6,17 @@ module.exports = function(app){
 	var csrfProtection = csrf({ cookie: true });
 
 	app.get('/', function(req, res){
+		var News = db.model('News')
+		News.find({ifDelete: 0}).limit(3).sort({_id:-1}).select('title created_at index').exec(function(err, docs){
+    	var moment = require('moment');
+    	docs.forEach(function(doc){
+    		var add_time = moment(doc.created_at).format('YYYY年MM月DD日');
+    		doc.add_time = add_time;
+    	});
+  		res.render('./views/index.html', { nav: 0, news: docs });
+  	});
 	  // res.sendFile('./views/index.html', { root: __dirname });
-	  res.render('./views/index.html', { nav: 0 }); //上面代码使用render方法，将message变量传入index模板，渲染成HTML网页。
+	  // res.render('./views/index.html', { nav: 0 }); //上面代码使用render方法，将message变量传入index模板，渲染成HTML网页。
 	  // res.redirect("login");
 	}).get('/contact', function(req, res){
 		res.render('./views/contact.html', { nav: 3 });
@@ -99,7 +108,7 @@ module.exports = function(app){
 			req.session.error = "请先登录";
       res.redirect("/login"); 
     }else{
-    	res.locals.email = user.email;
+    	res.locals.name = user.nickname;
 	    res.locals.priority = user.priority;
 	    res.render('./views/manage.html');  
     }
@@ -116,10 +125,21 @@ module.exports = function(app){
 	    	m_arr = [0,'一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
 
     if( proIndex ){
-    	Product.findOne({index: proIndex}).select('name detail imgs pv').exec(function(err, doc){
+    	Product.find({ifDelete: 0}).limit(6).sort({pv: -1, _id:-1}).select('name imgs index').exec(function(err, docs){
+    		if (err) return handleError(err);
+			  res.locals.hots = docs;
+    	});
+    	
+    	Product.findOne({index: proIndex}).select('name detail imgs pv classify').exec(function(err, doc){
     		doc.pv += 1;
     		doc.save();
-    		res.render('./views/product_detail.html', { nav: 2, product: doc });
+    		//
+    		Product.find({ifDelete: 0, classify: doc.classify}).limit(6).sort({_id:-1}).select('name imgs index').exec(function(err, docs){
+	    		if (err) return handleError(err);
+				  res.locals.relates = docs;
+
+				  res.render('./views/product_detail.html', { nav: 2, product: doc });
+	    	});
     	});
     }else{
     	var page = req.query.page || 1,
@@ -130,6 +150,14 @@ module.exports = function(app){
 	    if(req.query.type){
 	    	res.locals.classify = query.classify = req.query.type;
 	    }
+	    Product.find({ifDelete: 0}).limit(6).sort({pv: -1, _id:-1}).select('name imgs index').exec(function(err, docs){
+    		if (err) return handleError(err);
+			  res.locals.hots = docs;
+    	});
+    	Product.find({ifDelete: 0, recommend: 1}).limit(6).sort({_id:-1}).select('name imgs index').exec(function(err, docs){
+    		if (err) return handleError(err);
+			  res.locals.recommends = docs;
+    	});
 	    Product.where(query).count(function (err, count) {
 			  if (err) return handleError(err);
 			  res.locals.amount = Math.ceil(count/pageSize);
@@ -260,7 +288,13 @@ module.exports = function(app){
 	    	m_arr = [0,'一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
 
     if( newsIndex ){
-    	News.findOne({index: newsIndex}).select('title content pv').exec(function(err, doc){
+    	News.findOne({ifDelete: 0, index: {$lt: newsIndex}}).select('index title').exec(function(err, doc){
+    		res.locals.pre = doc;
+    	});
+    	News.findOne({ifDelete: 0, index: {$gt: newsIndex}}).select('index title').exec(function(err, doc){
+    		res.locals.after = doc;
+    	});
+    	News.findOne({ifDelete: 0, index: newsIndex}).select('title content pv').exec(function(err, doc){
     		doc.pv += 1;
     		doc.save();
     		var time = moment(doc.created_at).format('M-DD'),
@@ -275,6 +309,10 @@ module.exports = function(app){
 	    		skipNum = (page-1)*pageSize,
 	    		query = {ifDelete: 0};
 	    res.locals.page = page;
+	    News.find({ifDelete: 0}).limit(10).sort({pv: -1, _id:-1}).select('title index').exec(function(err, docs){
+    		if (err) return handleError(err);
+			  res.locals.hots = docs;
+    	});
 	    News.where(query).count(function (err, count) {
 			  if (err) return handleError(err);
 			  res.locals.amount = Math.ceil(count/pageSize);
