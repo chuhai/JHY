@@ -7,11 +7,10 @@ var session = require('express-session');
 var ueditor = require("ueditor");
 
 var express = require('express'),
-		fs = require('fs'),
-    app = express();
+		app = express();
 
 // 允许加载静态文件
-app.use(express.static('public'));
+app.use(express.static('public', { maxAge: 60 * 1000 * 60 * 2 }));
 // 设定views变量，意为视图存放的目录
 app.set('views', __dirname);
 
@@ -30,7 +29,6 @@ app.use(logger('combined'));
 // app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(multer());
 
 app.use(session({ 
     secret: 'jhy',
@@ -59,7 +57,6 @@ app.use("/ueditor/ue", ueditor(path.join(__dirname, 'public'), function(req, res
   }
   // 客户端发起其它请求
   else {
-
     res.setHeader('Content-Type', 'application/json');
     res.redirect('/ueditor/ueditor.config.json')
   }
@@ -74,7 +71,7 @@ var server = app.listen(3000, function() {
 
 app.use(function(err, req, res, next){
   console.error(err.stack);
-  res.status(500).send('出错啦');
+  res.status(500).send('<h1>出错啦</h1>');
 });
 
 
