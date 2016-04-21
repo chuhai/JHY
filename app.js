@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var ueditor = require("ueditor");
+var compression = require('compression');
 
 var express = require('express'),
 		app = express();
@@ -29,6 +30,7 @@ app.use(logger('combined'));
 // app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression());
 
 app.use(session({ 
     secret: 'jhy',
