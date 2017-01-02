@@ -3,6 +3,11 @@
 <head>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<meta name="viewport" content="width=device-width, initial-scale=1,  minimum-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="full-screen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司是一家专注于电源适配器、锂电池充电器、USB充电器的生产厂家，可定制相关产品。">
 	<meta name="keywords" content="骏泓源，深圳市骏泓源科技有限公司，适配器，充电器，定制，电源适配器，锂电池充电器，USB充电器">
 	<title>电源适配器厂家--骏泓源电源｜电源适配器｜锂电池充电器｜USB充电器｜深圳市骏泓源科技有限公司</title>
@@ -159,19 +164,88 @@
 		.index-news .date {
 			margin-right: 36px;
 		}
-
+		
+		@media (max-width: 750px) {
+			.whole-container {
+				background-size: 100% 100px;
+			}
+			.center-container {
+				width: 100%;
+    		min-width: 100%;
+			}
+			.company-desc-wrap .company-desc {
+				width: auto;
+				padding-top: 3%;
+			}
+			.company-desc-wrap .company-desc p {
+				line-height: 1.2;
+			}
+			.company-desc-wrap .company-desc h1,
+			.company-desc-wrap .for-img {
+				display: none;
+			}
+			.hint-tip {
+				padding-top: 30px;
+		    padding-bottom: 30px;
+		    font-size: 16px;
+		    line-height: 1.2;
+		    margin-left: 10%;
+    		margin-right: 10%;
+			}
+			.quality-tip {
+				padding-top: 20px;
+		    padding-bottom: 20px;
+		    font-size: 14px;
+		    text-align: center;
+		    line-height: 1.2;
+			}
+			.publicity-container {
+				height: auto;
+				background-size: 100% 100%;
+			}
+			.publicity-container p {
+				font-size: 14px;
+				line-height: 1.2;
+			}
+			.publicity {
+				width: 30.3%;
+				margin-right: 3%;
+				padding-top: 20px;
+				padding-bottom: 15px;
+			}
+			.index-title {
+				padding-top: 30px;
+			}
+			.index-product {
+				width: 32%;
+				margin-right: 2%;
+				box-sizing: border-box;
+			}
+			.index-product p {
+				line-height: 26px;
+    		font-size: 14px;
+			}
+			.index-product img {
+				height: 100px;
+			}
+			.index-news {
+				margin-left: 2%;
+				margin-bottom: 10px;
+				font-size: 16px;
+			}
+		}
 	</style>
 </head>
 <body class="has-footer">
 	<%- include('header.html', {nav: 0}) %>
 
 	<div class="whole-container">
-		<p class="hint-tip">主营产品：电源适配器/锂电池充电器/USB充电器</p>
+		<p class="hint-tip">主营产品：电源适配器/锂电池充电器/USB充电器/可定制</p>
 		<div class="center-container">
 			<div class="company-desc-wrap">
 				<div class="company-desc">
 					<h1>深圳市骏泓源科技有限公司</h1>
-					<p style="text-indent: 28px;">深圳市骏泓源科技有限公司成立于2014年，现有十余种AC/DC的产品（开关电源，电源适配器，充电器，硬盘盒电源，机顶盒电源，LED电源，恒流电源等），功率覆盖6W到100W，甚至更高等级的也在开发中，广泛应用于LED照明、通讯、电力、工业控制、仪器仪表、医疗、铁路及其他高科技领域。</p>
+					<p style="text-indent: 28px;">深圳市骏泓源科技有限公司成立于2009年，现有十余种AC/DC的产品（开关电源，电源适配器，充电器，硬盘盒电源，机顶盒电源，LED电源，恒流电源等），功率覆盖6W到100W，甚至更高等级的也在开发中，广泛应用于LED照明、通讯、电力、工业控制、仪器仪表、医疗、铁路及其他高科技领域。</p>
 					<p class="for-btn"><a href="/about" target="_blank">了解更多</a></p>
 				</div>
 				<div class="for-img"><img src="images/eagle.jpg"></div>
@@ -191,7 +265,7 @@
 			<li class="publicity">
 				<img src="images/icon_2.png">
 				<h3>企业文化</h3>
-				<p>过百万的销量，有我们的努力，更有你们的支持，市场很大，无人能永守第一，但我们从不放弃追求第一的心。无论市场怎么变，</p>
+				<p>过百万的销量，有我们的努力，更有你们的支持，市场很大，无人能永守第一，但我们从不放弃追求第一的心，无论市场怎么变。</p>
 			</li>
 			<li class="publicity">
 				<img src="images/icon_3.png">

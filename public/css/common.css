@@ -201,6 +201,19 @@ a {text-decoration: none;}
 ul, ul li {list-style: none;margin: 0;padding:0;}
 p {margin: 0;}
 
+@media (max-width: 750px) {
+  html {
+    font-size: 10px;
+  }
+  body {
+    min-width: 100%;
+    width: 100%;
+    font-size: 12px;
+  }
+  .kefu {
+    display: none;
+  }
+}
 .has-footer {
   position: relative;
   min-height: 100%;
@@ -239,6 +252,51 @@ p {margin: 0;}
   color: #fff;
   background-color: #0066c0;
   border-radius: 3px;
+}
+@media (max-width: 750px) {
+  .header .logo-wrap {
+    height: 50px;
+    margin-top: 8px;
+    margin-left: 0;
+  }
+  .header .navs {
+    right: 5%;
+    cursor: pointer;
+    padding-top: 22px;
+  }
+  .header .navs::after,
+  .header .navs::before {
+    content: "";
+    display: block;
+    width: 25px;
+    margin-top: 2px;
+    padding-top: 2px;
+    border-top: 3px solid #0066c0;
+    border-bottom: 3px solid #0066c0;
+  }
+  .header .navs ul {
+    display: none;
+    position: absolute;
+    left: -104px;
+    top: 22px;
+    z-index: 9;
+    width: 100px;
+    line-height: 2;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  .header .navs.show-menu ul {
+    display: block;
+  }
+  .header .navs li {
+    width: 100%;
+    margin-left: 0;
+  }
+  .header .navs a {
+    display: block;
+    padding: 0;
+  }
 }
 /* header */
 
@@ -315,6 +373,13 @@ p {margin: 0;}
 .pagination a.ellipsis {
   background-color: transparent;
   color: #ccc;
+}
+@media (max-width: 750px) {
+  .pagination a {
+    width: 30px;
+    font-size: 12px;
+    line-height: 22px;
+  }
 }
 /* pagination */
 

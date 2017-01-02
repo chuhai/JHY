@@ -3,6 +3,11 @@
 <head>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<meta name="viewport" content="width=device-width, initial-scale=1,  minimum-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="full-screen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司是一家专注于电源适配器、锂电池充电器、USB充电器的生产厂家，可定制相关产品。">
 	<meta name="keywords" content="骏泓源，深圳市骏泓源科技有限公司，适配器，充电器，定制，电源适配器，锂电池充电器，USB充电器">
 	<title>电源适配器厂家--骏泓源电源｜电源适配器｜锂电池充电器｜USB充电器｜深圳市骏泓源科技有限公司</title>
@@ -135,6 +140,31 @@
 			height: 100%;
 			vertical-align: middle;
 		}
+		@media (max-width: 750px) {
+			.center-container {
+				min-width: 0;
+			}
+			.product-container {
+				display: block;
+				width: 100%;
+			}
+			.product-container li {
+				width: 30%;
+		    padding-bottom: 26%;
+		    margin-left: 2%;
+		    margin-bottom: 33px;
+			}
+			.product-container li p {
+				line-height: 26px;
+		    font-size: 14px;
+			}
+			.classify-nav {
+				display: none;
+			}
+			.onsale-container {
+				display: none;
+			}
+		}
 	</style>
 </head>
 <body class="has-footer">
@@ -149,8 +179,8 @@
 		<div class="classify-nav" id="classify-nav">
 			<p class="title">产品分类</p>
 			<a href="/product?type=0" class="nav <% if(locals.classify==0){ %>active<% } %>">电源适配器</a>
-			<a href="/product?type=1" class="nav <% if(locals.classify==1){ %>active<% } %>">锂电池充电器</a>
-			<a href="/product?type=2" class="nav <% if(locals.classify==2){ %>active<% } %>">USB充电器</a>
+			<a href="/product?type=2" class="nav <% if(locals.classify==2){ %>active<% } %>">锂电池充电器</a>
+			<a href="/product?type=1" class="nav <% if(locals.classify==1){ %>active<% } %>">USB充电器</a>
 		</div>
 
 		<ul class="product-container">

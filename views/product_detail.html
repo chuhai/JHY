@@ -3,6 +3,11 @@
 <head>
 	<meta name="renderer" content="webkit">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+	<meta name="viewport" content="width=device-width, initial-scale=1,  minimum-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta name="apple-touch-fullscreen" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="full-screen" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta charset="UTF-8" name="description" content="深圳市骏泓源科技有限公司是一家专注于电源适配器、锂电池充电器、USB充电器的生产厂家，可定制相关产品。">
 	<meta name="keywords" content="骏泓源，深圳市骏泓源科技有限公司，适配器，充电器，定制，电源适配器，锂电池充电器，USB充电器">
 	<title>电源适配器厂家--骏泓源电源｜电源适配器｜锂电池充电器｜USB充电器｜深圳市骏泓源科技有限公司</title>
@@ -97,6 +102,35 @@
 			height: 100%;
 			vertical-align: middle;
 		}
+		@media (max-width: 750px) { 
+			.center-container {
+				min-width: 0;
+				width: 100%;
+			}
+			.product-detail-wrap {
+				display: block;
+				width: 100%;
+				padding-left: 0;
+			}
+			.product-detail-wrap h1 {
+				margin-left: 3%;
+				margin-bottom: 0.3em;
+			}
+			.product-detail-wrap #show-pic {
+				height: auto;
+				border: none;
+			}
+			.product-detail-wrap .blue-btn {
+				margin-left: 3%;
+			}
+			.product-detail {
+				margin-left: 3%;
+				margin-right: 3%;
+			}
+			.onsale-container {
+				display: none;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -157,6 +191,7 @@
 	
 
 	<%- include('kefu.html') %>
+	<%- include('footer.html') %>
 
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script>

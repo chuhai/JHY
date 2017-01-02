@@ -1,10 +1,37 @@
 <div class="header">
 	<a href="/"><img class="logo-wrap" src="images/header_logo.png"></a>
-	<ul class="navs">
+	<div class="navs" id="navs"><ul>
 		<li><a href="/" <% if(nav==0) { %> class="active" <% } %> >主页</a></li>
 		<li><a href="/product" <% if(nav==1) { %> class="active" <% } %> >公司产品</a></li>
 		<li><a href="/news" <% if(nav==2) { %> class="active" <% } %> >新闻中心</a></li>
 		<li><a href="/contact" <% if(nav==3) { %> class="active" <% } %> >联系我们</a></li>
 		<li><a href="/about" <% if(nav==4) { %> class="active" <% } %> >关于我们</a></li>
-	</ul>
+	</ul></div>
 </div>
+<script type="text/javascript">
+	var isMobile = navigator.userAgent.toLowerCase().match(/(ipod|iphone|android|coolpad|mmp|smartphone|midp|wap|xoom|symbian|j2me|blackberry|win ce)/i) != null;
+	isMobile && (document.getElementById('navs').onclick = function(){
+		toggleClass(this, 'show-menu');
+	});
+
+	function addClass(element,oClass){
+    if(!hasClass(element,oClass))       
+    element.className +=' '+ oClass;        
+  }
+  function hasClass(element,oClass){
+  	return element.className.match(new RegExp('(^|\\s)' + oClass + '(\\s|$)'));
+  }
+  function removeClass(element,oClass){
+    var cls=new RegExp('(^|\\s)' + oClass + '(\\s|$)');
+    if(hasClass(element,oClass)){
+        element.className=element.className.replace(cls,'')}
+  }
+  function toggleClass(element,oClass){
+    if(!hasClass(element,oClass)){
+    	addClass(element,oClass);
+    }
+    else{
+    	removeClass(element,oClass);
+    };     
+  }
+</script>
